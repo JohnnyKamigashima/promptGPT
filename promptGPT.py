@@ -11,18 +11,17 @@ import threading
 
 # Models: text-davinci-003,text-curie-001,text-babbage-001,text-ada-001
 model = 'text-davinci-003'
-# Defining the bot's personality using adjectives
-bot_personality = 'Responda de forma engracada, '
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
 def open_ai(prompt, api_key):
     # Make the request to the OpenAI API
     response = requests.post(
         'https://api.openai.com/v1/completions',
         headers={'Authorization': f'Bearer {api_key}'},
-        json={'model': model, 'prompt': prompt, 'temperature': 0.4, 'max_tokens': 300}
+        json={
+            'model': model,
+            'prompt': prompt[1],
+            'temperature': 0.3,
+            'max_tokens': 300
+        }
     )
 
     result = response.json()
@@ -34,7 +33,7 @@ def open_ai_image(prompt):
     # Make the request to the OpenAI API
     resp = requests.post(
         'https://api.openai.com/v1/images/generations',
-        headers={'Authorization': f'Bearer {API_KEY}'},
+        headers={'Authorization': f'Bearer {api_key}'},
         json={'prompt': prompt,'n' : 1, 'size': '1024x1024'}
     )
     response_text = json.loads(resp.text)
@@ -48,4 +47,4 @@ def read_key(key_file):
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print(open_ai(sys.argv, read_Key('/Users/johnnykamigashima/.openai.key')))
+    print(open_ai(sys.argv, read_key('/Users/johnnykamigashima/.openai.key')))

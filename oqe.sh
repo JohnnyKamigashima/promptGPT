@@ -1,0 +1,1 @@
+python ~/PycharmProjects/promptGPT/promptGPT.py "$1"
